@@ -362,9 +362,9 @@ static void read_guitar_inputs(void) {
     // Tilt (GP9, digital) -> Right Stick Y-Axis
     bool tilt_active = !gpio_get(PIN_TILT);
     if (tilt_active) {
-        XboxButtonData.r_y = -32768;  // 0% when tilt is pressed/on (inverted)
+        XboxButtonData.r_y = 32767;   // Full positive when tilt is pressed (100% up/left)
     } else {
-        XboxButtonData.r_y = 32767;   // 100% when tilt is off (inverted)
+        XboxButtonData.r_y = 0;       // Centered when not pressed (neutral 0%)
     }
     
     // Clear triggers
