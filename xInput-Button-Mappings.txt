@@ -1,0 +1,21 @@
+Green Fret - A - GPIO 10
+Red Fret - B - GPIO 11
+Yellow Fret - Y - GPIO 12
+Blue Fret - X  - GPIO 13
+Orange Fret - Left Shoulder - GPIO 14
+
+Strum Up - D-Pad Up - GPIO 7 & GPIO 2
+Strum Down - D-Pad Down - GPIO 8 & GPIO 3
+Left - D-Pad Left - GPIO 4
+Right - D-Pad Right - GPIO 5
+Centre - Guide - GPIO 6
+Start - Start - GPIO 1
+Select - Back - GPIO 0
+Tilt - Right Stick Y Axis - GPIO 9
+Whammy - Right Stick X Axis - GPIO 27 (ADC)
+
+Joystick X-Axis - Left Stick X-Axis - GPIO 28 (ADC)
+Joystick Y-Axis - Left Stick Y-Axis - GPIO 29 (ADC)
+
+Neopixel Data Pin - GPIO 23
+

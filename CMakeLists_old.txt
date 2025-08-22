@@ -1,0 +1,231 @@
+cmake_minimum_required(VERSION 3.13)
+
+# Initialize the SDK based on PICO_SDK_PATH
+include(pico_sdk_import.cmake)
+
+project(bgg_xinput_firmware)
+
+# Initialize the Raspberry Pi Pico SDK
+pico_sdk_init()
+
+# BGG XInput firmware - WORKING VERSION ONLY
+add_executable(bgg_xinput_firmware
+    main.cpp
+    config.c
+)
+
+# Add pico_stdlib library which aggregates commonly used features
+target_link_libraries(bgg_xinput_firmware 
+    pico_stdlib
+    pico_unique_id
+    hardware_gpio
+    hardware_adc
+    hardware_flash
+    tinyusb_device
+    tinyusb_board
+)
+
+# Enable usb output, disable uart output
+pico_enable_stdio_usb(bgg_xinput_firmware 1)
+pico_enable_stdio_uart(bgg_xinput_firmware 0)
+
+# Create map/bin/hex/uf2 file etc.
+pico_add_extra_outputs(bgg_xinput_firmware)
+    hardware_gpio
+    hardware_adc
+    hardware_flash
+    tinyusb_device
+    tinyusb_board
+)
+
+# Self-switching firmware libraries - HID version
+target_link_libraries(bgg_self_switching_hid
+    pico_stdlib
+    pico_unique_id
+    hardware_gpio
+    hardware_adc
+    hardware_flash
+    tinyusb_device
+    tinyusb_board
+)
+
+# Dual-boot bootloader libraries
+target_link_libraries(bgg_bootloader
+    pico_stdlib
+    pico_unique_id
+    hardware_gpio
+    hardware_flash
+    hardware_watchdog
+    pico_bootrom
+)
+
+# Dual-boot XInput firmware libraries
+target_link_libraries(bgg_dual_xinput
+    pico_stdlib
+    pico_unique_id
+    hardware_gpio
+    hardware_adc
+    hardware_flash
+    hardware_watchdog
+    tinyusb_device
+    tinyusb_board
+)
+
+# Dual-boot HID firmware libraries
+target_link_libraries(bgg_dual_hid
+    pico_stdlib
+    pico_unique_id
+    hardware_gpio
+    hardware_adc
+    hardware_flash
+    hardware_watchdog
+    tinyusb_device
+    tinyusb_board
+)
+
+# Compiler definitions for TinyUSB - XInput firmware
+target_compile_definitions(bgg_xinput_firmware PRIVATE
+    CFG_TUSB_CONFIG_FILE="tusb_config.h"
+)
+
+# Compiler definitions for TinyUSB - HID firmware  
+target_compile_definitions(bgg_hid_firmware PRIVATE
+    CFG_TUSB_CONFIG_FILE="tusb_config_hid.h"
+)
+
+# Compiler definitions for TinyUSB - Unified firmware  
+target_compile_definitions(bgg_unified_firmware PRIVATE
+    CFG_TUSB_CONFIG_FILE="tusb_config_unified.h"
+)
+
+# Smart unified firmware - use different configs and compile-time mode flags
+target_compile_definitions(bgg_smart_xinput_firmware PRIVATE 
+    CFG_TUSB_CONFIG_FILE="tusb_config_smart_xinput.h"
+    USE_XINPUT_MODE=1
+)
+target_compile_definitions(bgg_smart_hid_firmware PRIVATE 
+    CFG_TUSB_CONFIG_FILE="tusb_config_smart_hid.h"
+    USE_HID_MODE=1
+)
+
+# Self-switching firmware compile definitions
+target_compile_definitions(bgg_self_switching_xinput PRIVATE
+    CFG_TUSB_CONFIG_FILE="tusb_config_smart_xinput.h"
+)
+target_compile_definitions(bgg_self_switching_hid PRIVATE
+    CFG_TUSB_CONFIG_FILE="tusb_config_smart_hid.h"
+    COMPILE_FOR_HID=1
+)
+
+# Dual-boot bootloader compile definitions
+target_compile_definitions(bgg_bootloader PRIVATE
+    BOOTLOADER_BUILD=1
+)
+
+# Dual-boot XInput firmware compile definitions
+target_compile_definitions(bgg_dual_xinput PRIVATE
+    CFG_TUSB_CONFIG_FILE="tusb_config_smart_xinput.h"
+    DUAL_BOOT_BUILD=1
+    USB_MODE_XINPUT=1
+)
+
+# Dual-boot HID firmware compile definitions
+target_compile_definitions(bgg_dual_hid PRIVATE
+    CFG_TUSB_CONFIG_FILE="tusb_config_smart_hid.h" 
+    DUAL_BOOT_BUILD=1
+    USB_MODE_HID=1
+)
+
+# [Bootloader compile definitions removed]
+
+# Include directories
+target_include_directories(bgg_xinput_firmware PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}
+)
+
+target_include_directories(bgg_hid_firmware PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}
+)
+
+target_include_directories(bgg_unified_firmware PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}
+)
+
+# Include directories for smart unified firmware
+target_include_directories(bgg_smart_xinput_firmware PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}
+)
+
+target_include_directories(bgg_smart_hid_firmware PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}
+)
+
+# [Bootloader include directories removed]
+
+# Include directories for self-switching firmware
+target_include_directories(bgg_self_switching_xinput PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}
+)
+
+target_include_directories(bgg_self_switching_hid PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}
+)
+
+# Include directories for dual-boot components
+target_include_directories(bgg_bootloader PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}
+    ${CMAKE_CURRENT_LIST_DIR}/src
+)
+
+target_include_directories(bgg_dual_xinput PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}
+    ${CMAKE_CURRENT_LIST_DIR}/src
+)
+
+target_include_directories(bgg_dual_hid PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}
+    ${CMAKE_CURRENT_LIST_DIR}/src
+)
+
+# enable usb output, disable uart output
+pico_enable_stdio_usb(bgg_xinput_firmware 0)
+pico_enable_stdio_uart(bgg_xinput_firmware 1)
+
+pico_enable_stdio_usb(bgg_hid_firmware 0)
+pico_enable_stdio_uart(bgg_hid_firmware 1)
+
+pico_enable_stdio_usb(bgg_unified_firmware 0)
+pico_enable_stdio_uart(bgg_unified_firmware 1)
+
+# Enable stdio for smart unified firmware
+pico_enable_stdio_usb(bgg_smart_xinput_firmware 0)
+pico_enable_stdio_uart(bgg_smart_xinput_firmware 1)
+
+pico_enable_stdio_usb(bgg_smart_hid_firmware 0)
+pico_enable_stdio_uart(bgg_smart_hid_firmware 1)
+
+# Self-switching firmware stdio
+pico_enable_stdio_usb(bgg_self_switching_xinput 0)
+pico_enable_stdio_uart(bgg_self_switching_xinput 1)
+
+pico_enable_stdio_usb(bgg_self_switching_hid 0)
+pico_enable_stdio_uart(bgg_self_switching_hid 1)
+
+# Dual-boot components stdio
+pico_enable_stdio_usb(bgg_bootloader 0)
+pico_enable_stdio_uart(bgg_bootloader 1)
+
+pico_enable_stdio_usb(bgg_dual_xinput 1)
+pico_enable_stdio_uart(bgg_dual_xinput 1)
+
+pico_enable_stdio_usb(bgg_dual_hid 1)
+pico_enable_stdio_uart(bgg_dual_hid 1)
+
+# [Bootloader stdio and linker settings removed]
+
+# create map/bin/hex/uf2 file etc. - disable to avoid picotool issues
+# pico_add_extra_outputs(bgg_xinput_firmware)
+
+# Set PICO_NO_EXTRA_OUTPUTS_BEFORE_DEADLINE=1 to disable extra output before deadline  
+set(PICO_NO_PICOTOOL 1)
+set(PICOTOOL_BINARY picotool)

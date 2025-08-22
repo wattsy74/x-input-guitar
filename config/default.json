@@ -1,0 +1,34 @@
+{
+  "device_name": "BGG Guitar Controller",
+  "firmware_version": "1.0.0",
+  "hardware_revision": "v1.0",
+  "button_mapping": {
+    "green": 2,
+    "red": 3,
+    "yellow": 4,
+    "blue": 5,
+    "orange": 6,
+    "strum_up": 7,
+    "strum_down": 8,
+    "star_power": 9,
+    "start": 10,
+    "select": 11
+  },
+  "led_config": {
+    "enabled": true,
+    "brightness": 128,
+    "color_scheme": "rainbow",
+    "animation_speed": 50
+  },
+  "controller_settings": {
+    "debounce_time": 10,
+    "analog_deadzone": 5,
+    "trigger_threshold": 128
+  },
+  "usb_config": {
+    "vendor_id": "0x045E",
+    "product_id": "0x028E",
+    "manufacturer": "BumbleGum Guitars",
+    "product_name": "BGG Guitar Controller"
+  }
+}

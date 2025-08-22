@@ -1,0 +1,53 @@
+# PlatformIO
+.pio
+
+# External repositories (don't include in this repo)
+pico-sdk/
+BGG-Windows-App*/
+
+# Build directories
+build/
+build_*/
+
+# Compiled files
+*.elf
+*.bin
+*.hex
+*.uf2
+*.o
+*.a
+
+# IDE files
+.vscode/
+*.code-workspace
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Backup files
+*.bak
+*.backup
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+
+# Ninja
+.ninja_deps
+.ninja_log
+rules.ninja
+
+# Windows executable files (keep only source)
+*.exe

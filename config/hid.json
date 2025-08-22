@@ -1,0 +1,35 @@
+{
+  "device_name": "BGG Guitar Controller (HID)",
+  "firmware_version": "1.0.0",
+  "hardware_revision": "v1.0",
+  "button_mapping": {
+    "green": 2,
+    "red": 3,
+    "yellow": 4,
+    "blue": 5,
+    "orange": 6,
+    "strum_up": 7,
+    "strum_down": 8,
+    "star_power": 9,
+    "start": 10,
+    "select": 11
+  },
+  "led_config": {
+    "enabled": true,
+    "brightness": 64,
+    "color_scheme": "solid_blue",
+    "animation_speed": 30
+  },
+  "controller_settings": {
+    "debounce_time": 15,
+    "analog_deadzone": 10,
+    "trigger_threshold": 64
+  },
+  "hid_config": {
+    "vendor_id": "0x1209",
+    "product_id": "0xBGG1",
+    "manufacturer": "BumbleGum Guitars",
+    "product_name": "BGG HID Guitar Controller",
+    "report_rate": 1000
+  }
+}
